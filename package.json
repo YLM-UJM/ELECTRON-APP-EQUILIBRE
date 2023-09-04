@@ -13,6 +13,7 @@
     "electron": "^26.1.0"
   },
   "dependencies": {
-    "electronmon": "^2.0.2"
+    "electronmon": "^2.0.2",
+    "ws": "^8.13.0"
   }
 }
