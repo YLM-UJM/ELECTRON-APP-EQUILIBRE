@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="app/test/test.css">
+  </head>
+  <body>    
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="text-center">
+
+        <div class="ready active">
+            <h2>
+                Vous allez commencer par lever le pied <span style="font-weight: bold;text-transform: uppercase;">gauche.</span> 
+                <br>
+                <br>
+                Dès que nous aurons détecté que vous avez levez le pied, le test démarre pour 15 secondes et vous devez regarder le point bleu sur l'écran.
+                <br>
+              </h2>
+        </div>
+
+        <div class="ready2 ">
+            <h2>
+                Quand vous êtes prêt, vous allez maintenant lever le pied <span style="font-weight: bold;text-transform: uppercase;">droit.</span> 
+                
+              </h2>
+        </div>
+
+        <div class="test">
+            <div id="cercle" style="width:200px; height:200px; background-color: rgb(106, 106, 240); border-radius: 100px; display: flex; align-items: center; justify-content: center; font-size: 2em; color: white;">
+                <p id="countDownTest" style="margin: 0; font-size: 100px;"></p>
+            </div>
+        </div>
+
+        <div class="recup" style="text-align: center;">
+            <h2 style="text-align: center; margin-bottom: 50px">Période de récupération</h2>
+            <div id="cercle" style="width:200px; height:200px; background-color: rgb(235, 71, 71); border-radius: 100px; display: block; margin: 0 auto; font-size: 2em; color: white; line-height: 200px; text-align: center;">
+                <p id="countDownRecup" style="margin: 0; font-size: 100px; display: inline-block; vertical-align: middle; line-height: normal;"></p>
+            </div>
+        </div>
+        
+
+        <div class="no-detected">
+            <h2>Nous n'avons pas détecté de décollage du pied. Veuillez recommencer !</h2> <br>
+            <h2>Vous devez lever le pied <span id="side" style="font-weight: bold;text-transform: uppercase;">gauche.</span>  </h2>
+            <button style="margin-top:20px" class="btn btn-primary" id="restart">Recommencer le test</button>
+        </div>
+
+        <div class="step1Done">
+            <h2>Restez sur la plateforme, vous avez 15 secondes de récupération avant de réaliser le test sur l'autre pied.</h2>
+        </div>
+
+        <div class="end">
+            <h2>Fin</h2>
+        </div>
+        
+
+      </div>
+    </div>
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="app/test/test.js"></script>
+  </body>
+</html>

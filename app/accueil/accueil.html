@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="app/accueil/accueil.css" />
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  </head>
+  <body>    
+    <div id="presentation" class="d-flex flex-column vh-100">
+        <!-- Div de 80% -->
+        <div class="flex-grow-1 d-flex flex-column" style="background-color: #e9ecef;">
+            <div id="myCarousel" class="carousel slide" data-interval="false" data-ride="carousel" style="flex-grow: 1;">
+                <div class="carousel-inner">
+                    <!-- Les diapositives seront injectées ici par votre script JavaScript -->
+                </div>
+            </div>
+        </div>
+        <div class="carousel-controls d-flex justify-content-between mb-2">
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Précédent</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Suivant</span>
+            </a>
+        </div>
+        <!-- Div de 20% -->
+        <div class="d-flex justify-content-center align-items-center" style="flex: 0 0 20%; background-color: #adb5bd;">
+            <button class="btn btn-primary" id="startCountdown">Démarrer le test</button>
+        </div>
+    </div>
+
+
+
+
+  <div id="overlay" class="overlay active"">
+    <div style="width:50%; background-color:white; padding:20px; border-radius:10px; box-shadow: 0px 0px 10px 0px #000; margin-left: auto; margin-right: auto;">
+        <select id="userSelect" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+          <option selected>Choisir l'utilisateur</option>
+            <!-- Les options seront ajoutées ici depuis le JavaScript -->
+        </select>
+    </div>
+  </div>
+
+  <!-- <div class="modal fade" id="monModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body text-center">
+          <h1>
+            Veuillez monter sur la plateforme ! 
+          </h1>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+  <div id="overlay2" class="overlay">
+    <div style="width:50%; background-color:white; padding:20px; border-radius:10px; box-shadow: 0px 0px 10px 0px #000; margin-left: auto; margin-right: auto;">
+      <h1 class="text-center">
+        Veuillez monter sur la plateforme !
+      </h1>
+    </div>
+  </div>
+  
+
+
+
+  </body>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+
+  <!-- <script src="node_modules/jquery/dist/jquery.min.js"></script> -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+  <script src="node_modules/jquery/dist/jquery.min.js"></script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+  
+  <script src="app/accueil/accueil.js"></script>
+</html>

@@ -1,6 +1,7 @@
 // preload.js
 
 const { contextBridge, ipcRenderer } = require('electron');
+// const fs = require('fs');
 
 contextBridge.exposeInMainWorld(
   "api", {
@@ -34,6 +35,17 @@ contextBridge.exposeInMainWorld(
       }
     },
     //chart: Chart.chart
+  //   lireJSON: (chemin) => {
+  //     return new Promise((resolve, reject) => {
+  //         fs.readFile(chemin, 'utf8', (err, data) => {
+  //             if (err) {
+  //                 reject(err);
+  //             } else {
+  //                 resolve(JSON.parse(data));
+  //             }
+  //         });
+  //     });
+  // },
   }
 );
 // All the Node.js APIs are available in the preload process.

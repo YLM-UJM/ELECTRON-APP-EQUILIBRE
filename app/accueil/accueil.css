@@ -1,0 +1,113 @@
+img{
+    max-height: 80%;
+    max-width: 80%;
+
+}
+
+.custom-img{
+    border: 1px solid black;
+    box-shadow: 6px 7px 8px #554b4b;
+}
+
+.second-img{
+    position: absolute;
+    z-index: 2;
+    width: 150px;
+    bottom: 20px;
+    left: 100px;
+}
+
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#myCarousel {
+    width: 100%;
+    margin: 0;
+}
+
+.carousel-inner,
+.carousel-item,
+.carousel-item .row,
+.carousel-item .col-md-6 {
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-item .col-md-6 p {
+    white-space: pre-wrap;
+}
+
+p{
+    text-align: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black !important
+}
+.carousel-control-prev,
+.carousel-control-next {
+    align-self: center;
+    background-color: black !important
+}
+#myCarousel {
+    flex-grow: 1;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: black;
+    height: 20px;
+    width: 20px;
+    background-size: 20px 20px;
+}
+.carousel-controls {
+    height: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0; /* Commencez avec une opacité de 0 pour le masquer */
+    visibility: hidden; /* Cachez l'élément */
+    transition: opacity 0.3s ease-in-out; /* Ajoutez une transition d'opacité */
+    display: flex; /* Utilisez display:flex pour centrer verticalement */
+    justify-content: center; /* Centre le contenu horizontalement */
+    align-items: center; /* Centre le contenu verticalement */
+    z-index: 2;
+  }
+  
+  .overlay.active {
+    opacity: 1; /* Lorsque vous ajoutez la classe "active", l'opacité devient 1 pour afficher le contenu */
+    visibility: visible; /* Affichez l'élément */
+  }
+
+  .overlay div {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 0px #000;
+  }
+  .overlay select {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+
+  #userSelect{
+    text-align: center !important
+  }

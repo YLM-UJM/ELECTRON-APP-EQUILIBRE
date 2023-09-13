@@ -1,0 +1,6 @@
+.ready, .test, .no-detected, .step1Done, .ready2, .end, .recup {
+    display: none !important;
+  }
+  .active {
+    display: block !important;
+  }

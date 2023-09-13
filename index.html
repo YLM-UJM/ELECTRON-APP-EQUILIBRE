@@ -5,18 +5,27 @@
   <head>
     <meta charset="UTF-8">
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src ws://localhost:8080/">
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src ws://localhost:8080/"> -->
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <title>Hello World!</title>
+    <title>ÉQUILIBRE</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
-    <button id="test">Test</button>
+
+    <!-- <button style="margin: 10px;" class="btn btn-primary" id="test"><h3>Démarrer test équilibre</h3></button> -->
+
+    <div id="pageContent">
+      <!-- Le contenu spécifique à chaque page sera chargé ici -->
+      
+    </div>
+    
 
     <!-- You can also require other files to run in this process -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="./index.js"></script>
   </body>
 </html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="app/accueil/accueil.css" />
+  </head>
+  <body>    
+    <div id="presentation" class="d-flex flex-column vh-100">
+      <!-- Div de 80% -->
+      <div class="flex-grow-1 d-flex" style="background-color: #e9ecef;">
+          <!-- Colonne de gauche avec l'image -->
+          <div class="col-6 d-flex justify-content-center align-items-center">
+              <img src="./app/accueil/assets/HG_main_droite.png" alt="Description de l'image" class="img-fluid">
+          </div>
+          <!-- Colonne de droite avec le texte -->
+          <div class="col-6 d-flex justify-content-center align-items-center">
+              <p>Veuillez prendre l'outil dans la main droite comme sur l'image de gauche.</p>
+          </div>
+      </div>
+      <!-- Div de 20% -->
+      <div class="d-flex justify-content-center align-items-center" style="flex: 0 0 20%; background-color: #adb5bd;">
+        <button class="btn btn-primary" id="startCountdown">Démarrer le test</button>
+    </div>
+  </div>
+
+
+  <div id="overlay" style="position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center;">
+    <div style="width:50%; background-color:white; padding:20px; border-radius:10px; box-shadow: 0px 0px 10px 0px #000; margin-left: auto; margin-right: auto;">
+        <select id="userSelect" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+          <option selected>Choisir l'utilisateur</option>
+            <!-- Les options seront ajoutées ici depuis le JavaScript -->
+        </select>
+    </div>
+  </div>
+
+
+
+  </body>
+
+  <script src="app/accueil/accueil.js"></script>
+</html>

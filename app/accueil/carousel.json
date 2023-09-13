@@ -1,0 +1,14 @@
+[
+    {
+        "image": "./app/accueil/assets/HG_main_droite.png",
+        "texte": "Texte pour l'image 1"
+    },
+    {
+        "image": "./app/accueil/assets/HG_main_droite.png",
+        "texte": "Texte pour l'image 2"
+    },
+    {
+        "image": "./app/accueil/assets/HG_main_droite.png",
+        "texte": "Texte pour l'image 3"
+    }
+]
