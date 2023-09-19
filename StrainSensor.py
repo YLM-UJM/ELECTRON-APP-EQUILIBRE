@@ -12,10 +12,10 @@ import threading
 import json
 import pandas as pd
 import beepy
-import paho.mqtt.client as mqtt
+# import paho.mqtt.client as mqtt
 
-clientMQTT = mqtt.Client()
-clientMQTT.connect('localhost',1883)
+# clientMQTT = mqtt.Client()
+# clientMQTT.connect('localhost',1883)
 detect = 0.8
 masseDetected = 4
 sideDetected = False

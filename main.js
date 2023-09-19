@@ -149,7 +149,7 @@ db.connect(function(err) {
 return db;
 }
 
-function getUsers(db, webContents) {
+function getUsers(db) {
   db.query('SELECT id, prenom FROM user ORDER BY id DESC', (error, results, fields) => {
     if (error) {
       return console.error(error.message);
