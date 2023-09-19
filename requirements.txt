@@ -1,0 +1,8 @@
+beepy==1.0.7
+numpy==1.24.2
+paho_mqtt==1.6.1
+pandas==1.5.3
+Phidget22==1.16.20230707
+Phidget22==1.17.20230824
+scipy==1.11.2
+websocket_client==1.6.2
