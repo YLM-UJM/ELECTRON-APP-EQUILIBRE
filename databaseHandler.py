@@ -1,4 +1,5 @@
 import mysql.connector
+import numpy as np
 
 class DictToObject:
     def __init__(self, dictionary):
@@ -40,13 +41,13 @@ class databaseHandler:
     def insertResults(self, idEquilibreSession, EA):
         sql = "INSERT INTO equilibre_values (idEquilibreSession, idEquilibreValues, createdAt, value) VALUES (%s, DEFAULT, DEFAULT, %s)"
         values = (idEquilibreSession, EA)
-        print(EA)
+        values = [float(x) if isinstance(x, np.float64) else x for x in values]
         self.cursor.execute(sql, values)
         self.mydb.commit()
 
     def createEquilibreSession(self, idUser):
         # Exécuter une instruction SQL pour insérer une nouvelle ligne
-        sql = sql = "INSERT INTO equilibre_session (idUser, idEquilibreSession, createdAt, age, sexe) VALUES (%s, DEFAULT, DEFAULT, DEFAULT, DEFAULT)"
+        sql = sql = "INSERT INTO equilibre_session (idUser, idEquilibreSession, createdAt) VALUES (%s, DEFAULT, DEFAULT)"
         values = (idUser,)
         self.cursor.execute(sql, values)
 
