@@ -5,6 +5,7 @@ const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 const WebSocket = require('ws');
 const mysql = require('mysql');
+const MySQLEvents = require('@rodrigogs/mysql-events');
 
 // Initiliser Websocket
 let wss;
@@ -38,6 +39,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
   db = connectDb();
+  initMySQLListener(db);
   
 
   // Connexion websocket
@@ -147,13 +149,42 @@ db.connect(function(err) {
 return db;
 }
 
-function getUsers(db,event) {
+function getUsers(db, webContents) {
   db.query('SELECT id, prenom FROM user ORDER BY id DESC', (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }
     console.log('retunr user')
-    event.reply('fromMain', { type: 'get-users-reply', data: results });
-    
+    mainWindow.webContents.send('fromMain', { type: 'get-users-reply', data: results });
   });
+}
+
+function initMySQLListener(db) {
+  const program = async () => {
+    const instance = new MySQLEvents(db, {
+      startAtEnd: true, // Commencez à écouter les événements à partir de la position actuelle du binlog
+      excludedSchemas: {
+        mysql: true,
+      },
+    });
+
+    await instance.start();
+
+    instance.addTrigger({
+      name: 'User Change Listener',
+      expression: 'selfit_station.user.*', // Écoutez tous les événements sur la table 'user' dans votre base de données
+      statement: MySQLEvents.STATEMENTS.ALL, // Écoutez toutes les opérations DML (INSERT, UPDATE, DELETE)
+      onEvent: (event) => { // Doit traiter l'événement
+        console.log(event); // Affichez l'événement pour le débogage
+        getUsers(db); // Mettez à jour la liste des utilisateurs
+      },
+    });
+
+    instance.on(MySQLEvents.EVENTS.CONNECTION_ERROR, console.error);
+    instance.on(MySQLEvents.EVENTS.ZONGJI_ERROR, console.error);
+  };
+
+  program()
+    .then()
+    .catch(console.error);
 }
