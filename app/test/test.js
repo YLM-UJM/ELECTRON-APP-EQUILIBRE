@@ -1,8 +1,13 @@
+// const { writeSync } = require("node:original-fs");
+
 $(function() {
+
+
     function showDiv(className) {
         $('.ready, .test, .no-detected, .end, .step1Done, .ready2, .recup').removeClass('active');
         $(`.${className}`).addClass('active');
       }
+
 
       var countDownTest = document.getElementById('countDownTest');
       var countDownRecup = document.getElementById('countDownRecup');
@@ -87,7 +92,7 @@ if (essai == 2) {
 })
 
 function recup(countDownRecup, essai) {
-    let rest = 5;
+    let rest = durationRestStability;
     showDiv('recup');
     countDownRecup.textContent = rest;
     const timerInterval = setInterval(() => {

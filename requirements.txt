@@ -6,3 +6,5 @@ Phidget22==1.16.20230707
 Phidget22==1.17.20230824
 scipy==1.11.2
 websocket_client==1.6.2
+python-dotenv=1.0.0
+

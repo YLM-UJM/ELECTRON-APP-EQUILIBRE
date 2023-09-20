@@ -12,7 +12,18 @@ import threading
 import json
 import pandas as pd
 import beepy
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 # import paho.mqtt.client as mqtt
+
+DB_HOST = os.getenv('DB_HOST')
+DB_USER = os.getenv('DB_USER')
+DB_PASSWORD = os.getenv('DB_PASSWORD')
+DB_NAME = os.getenv('DB_NAME')
+DB_PORT = os.getenv('DB_PORT')
+
 
 # clientMQTT = mqtt.Client()
 # clientMQTT.connect('localhost',1883)
@@ -438,7 +449,7 @@ class WebSocketClient:
 
     
 if __name__ == '__main__':
-    db = databaseHandler('localhost','root','root','selfit_station',8889)
+    db = databaseHandler(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,DB_PORT)
     S0 = StrainSensor(SERIAL_NUMBER,0,db.config.dataIntervalStability,db.config.A0,db.config.B0)
     S1 = StrainSensor(SERIAL_NUMBER,1,db.config.dataIntervalStability,db.config.A1,db.config.B1)
     S2 = StrainSensor(SERIAL_NUMBER,2,db.config.dataIntervalStability,db.config.A2,db.config.B2)

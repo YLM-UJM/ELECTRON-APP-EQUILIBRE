@@ -111,3 +111,10 @@ p{
   #userSelect{
     text-align: center !important
   }
+
+  #changeUser{
+    bottom: 10px;
+    right:10px;
+    position: absolute;
+    display: none;
+  }

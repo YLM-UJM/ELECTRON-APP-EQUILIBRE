@@ -6,6 +6,7 @@ const path = require('path')
 const WebSocket = require('ws');
 const mysql = require('mysql');
 const MySQLEvents = require('@rodrigogs/mysql-events');
+require('dotenv').config();
 
 // Initiliser Websocket
 let wss;
@@ -40,6 +41,7 @@ app.whenReady().then(() => {
   createWindow();
   db = connectDb();
   initMySQLListener(db);
+
   
 
   // Connexion websocket
@@ -93,6 +95,7 @@ app.whenReady().then(() => {
     if (data.topic == 'get-users') {
       console.log('get User')
       getUsers(db,event);
+      getConfig(db);
     }
     else if (data.topic == 'user-selected') {
       //console.log('idUser : ',data.message)
@@ -101,6 +104,10 @@ app.whenReady().then(() => {
     if (data.topic == 'toPython') {
         ws.send(JSON.stringify(data));
         console.log(data)
+    }
+
+    if (data.topic == 'get-config') {
+
     }
 
   })
@@ -132,11 +139,11 @@ app.on('window-all-closed', () => {
 function connectDb() {
   // Se connecter à la base de données 
   const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'root',
-    database: 'selfit_station',
-    port: 8889
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
 db.connect(function(err) {
@@ -162,6 +169,7 @@ function getUsers(db) {
 function initMySQLListener(db) {
   const program = async () => {
     const instance = new MySQLEvents(db, {
+      serverId:2,
       startAtEnd: true, // Commencez à écouter les événements à partir de la position actuelle du binlog
       excludedSchemas: {
         mysql: true,
@@ -176,7 +184,18 @@ function initMySQLListener(db) {
       statement: MySQLEvents.STATEMENTS.ALL, // Écoutez toutes les opérations DML (INSERT, UPDATE, DELETE)
       onEvent: (event) => { // Doit traiter l'événement
         console.log(event); // Affichez l'événement pour le débogage
+
         getUsers(db); // Mettez à jour la liste des utilisateurs
+      },
+    });
+
+    instance.addTrigger({
+      name: 'User Change Listener',
+      expression: 'selfit_station.config.*', // Écoutez tous les événements sur la table 'user' dans votre base de données
+      statement: MySQLEvents.STATEMENTS.ALL, // Écoutez toutes les opérations DML (INSERT, UPDATE, DELETE)
+      onEvent: (event) => { // Doit traiter l'événement
+        console.log(event); // Affichez l'événement pour le débogage
+        getConfig(db);
       },
     });
 
@@ -187,4 +206,13 @@ function initMySQLListener(db) {
   program()
     .then()
     .catch(console.error);
+}
+
+function getConfig(db) {
+  db.query('SELECT durationRestStability FROM config LIMIT 1', (error, results, fields) => {
+    if (error) {
+      return console.error(error.message);
+    }
+    mainWindow.webContents.send('fromMain', { topic: 'config', data: results });
+  });
 }

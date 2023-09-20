@@ -6,7 +6,7 @@
 //     }
 //     window.api.send('toMain',payload);
 // })
-
+const durationRestStability = 15;
 $(function() {
     console.log('index.js')
 
@@ -25,6 +25,12 @@ $(function() {
 
 
 window.api.receive('fromMain', (payload) => {
+
+
+    if (payload.topic == 'config') {
+        console.log(data);
+        durationRestStability = payload.data[0].durationRestStability;
+    }
     //console.log(payload);
     // if (payload.topic == 'screen') {
     //     if (payload.message == 0) {
@@ -53,6 +59,8 @@ window.api.receive('fromMain', (payload) => {
         }
 
     }
+
+
 
 })
 

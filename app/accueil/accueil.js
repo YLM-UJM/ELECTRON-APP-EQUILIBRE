@@ -168,6 +168,7 @@ window.api.receive('fromMain', (arg) => {
 
 function handleUserSelectChange(event) {
     document.getElementById('overlay').style.display = 'none';
+    document.getElementById('changeUser').style.display = 'block';
     window.idUserSelected = event.target.value;
     const payload = {
         topic: 'user-selected',
@@ -184,7 +185,12 @@ userSelect.removeEventListener('change', handleUserSelectChange);
 // Ensuite, ajoutez le nouvel écouteur d'événement
 userSelect.addEventListener('change', handleUserSelectChange);
     
-    
+document.getElementById('changeUser').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'flex';
+    document.getElementById('changeUser').style.display = 'none';
+
+
+})
     
     
 
