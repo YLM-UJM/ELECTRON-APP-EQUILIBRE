@@ -7,7 +7,7 @@ class DictToObject:
             setattr(self, key, value)
 
 class databaseHandler:
-    def __init__(self, host, user, password, database, port):
+    def __init__(self, host, user, password, database, port, id):
         self.mydb = mysql.connector.connect(
             host=host,
             user=user,
@@ -18,13 +18,14 @@ class databaseHandler:
         self.cursor = self.mydb.cursor()
         if self.mydb:
             print('db connected')
-        self.config = self.getConfig()
+        self.config = self.getConfig(id)
 
-    def getConfig(self):
+    def getConfig(self, id):
         # Préparez la requête SQL avec un paramètre de substitution
-        sql = "SELECT * FROM config"
+        sql = "SELECT * FROM config WHERE idConfig = %s"
         # Exécutez la requête avec la valeur de maConfig.idSession
-        self.cursor.execute(sql)
+        values = (id,)
+        self.cursor.execute(sql, values)
 
         column_names = [desc[0] for desc in self.cursor.description]
         results = []

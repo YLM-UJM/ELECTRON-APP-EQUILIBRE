@@ -31,7 +31,7 @@ window.api.receive('fromMain', (payload) => {
         console.log(data);
         durationRestStability = payload.data[0].durationRestStability;
     }
-    //console.log(payload);
+    console.log(payload);
     // if (payload.topic == 'screen') {
     //     if (payload.message == 0) {
     //         $("#pageContent").load("app/accueil/accueil.html");

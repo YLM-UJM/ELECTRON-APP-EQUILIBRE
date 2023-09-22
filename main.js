@@ -58,7 +58,7 @@ app.whenReady().then(() => {
       console.log(formattedJson);
       if (jsonObject.topic == 'fromPython') {
         mainWindow.webContents.send('fromMain', jsonObject); 
-        if (jsonObject.status == 'onPlateform') {
+        if (jsonObject.status == 'go') {
           payload = {
             'topic': 'toPython',
             'status': 'start',

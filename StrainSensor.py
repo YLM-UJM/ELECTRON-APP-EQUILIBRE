@@ -27,18 +27,27 @@ DB_PORT = os.getenv('DB_PORT')
 
 # clientMQTT = mqtt.Client()
 # clientMQTT.connect('localhost',1883)
-detect = 0.8
+detect = 0.60
 masseDetected = 4
 sideDetected = False
 allowDetection = False
 subjectOnPlateform = False
-SERIAL_NUMBER = 565882
-# SERIAL_NUMBER = 565863
+baseline = False
+#SERIAL_NUMBER = 565882
+SERIAL_NUMBER = 565863
 est_stable = 0
 indice_stable = 0
 essai = 0
 
+config = 4
+g = 9.81
 
+if config == 4:
+    order = [2,3,0,1]
+if config == 3:
+    order = [0,3,1,2]
+
+print(order[0])
 
 class StrainSensor():
     '''Class used to handle load cell type sensors. Extends Sensor class '''
@@ -50,6 +59,8 @@ class StrainSensor():
     side = 'no one'
     total_L = 0
     total_R = 0
+    baseline_L = 0
+    baseline_R = 0
     
 
 
@@ -90,12 +101,19 @@ class StrainSensor():
         '''
         self.startTime = time.time()
         def onSensorValueChange(channelObject,voltageRatio):
-            global i
+            global i, baseline
             rawTime = time.time()
             deltaTime = rawTime- self.startTime
-            voltageRatio = ((voltageRatio-self.B) / self.A) - self.offset
+            if (config == 3):
+                voltageRatio = ((voltageRatio-self.B) / self.A) 
+            if (config == 4):
+                voltageRatio = (((voltageRatio-self.B) / self.A)) / g
+            
+            voltageRatio = voltageRatio - self.offset
                         # Ajoutez la nouvelle valeur à la série de données du capteur
             StrainSensor.sensor_data[self.channelNo] = pd.concat([StrainSensor.sensor_data[self.channelNo], pd.Series([voltageRatio])], ignore_index=True)
+            if (baseline):
+                self.getBaseline()
             self.checkPosition()
             if sideDetected == False:
                 self.checkSide()
@@ -104,6 +122,8 @@ class StrainSensor():
                     self.offsetData.append(voltageRatio)
                 else:
                     self.getOffset = False
+            # if (self.channelNo == 2):
+            #     print(self.channelNo,voltageRatio)
             # if self.i % 20 == 0:
             #     clientMQTT.publish(str(self.channelNo),voltageRatio)
             #     print(str(self.channelNo),voltageRatio)
@@ -153,7 +173,7 @@ class StrainSensor():
         else:
             i = 0
             subjectOnPlateform = False
-        #print(subjectOnPlateform)
+
 
 
     def checkSide(self):
@@ -162,27 +182,41 @@ class StrainSensor():
             if len(StrainSensor.sensor_data[self.channelNo]) >= StrainSensor.data_points_per_second:
                 #print('detection en cours')
                 if (StrainSensor.total > masseDetected):
-                    if self.channelNo in [0, 3]:
-                        StrainSensor.total_L = StrainSensor.sensor_data[0].iloc[-StrainSensor.data_points_per_second:].mean() +  StrainSensor.sensor_data[3].iloc[-StrainSensor.data_points_per_second:].mean()
+                    if self.channelNo in [order[0], order[1]]:
+                        StrainSensor.total_L = StrainSensor.sensor_data[order[0]].iloc[-StrainSensor.data_points_per_second:].mean() +  StrainSensor.sensor_data[order[1]].iloc[-StrainSensor.data_points_per_second:].mean()
 
-                    elif self.channelNo in [1, 2]:
+                    elif self.channelNo in [order[2], order[3]]:
                         # Utilisez pandas.concat au lieu de append
-                        StrainSensor.total_R = StrainSensor.sensor_data[1].iloc[-StrainSensor.data_points_per_second:].mean() +  StrainSensor.sensor_data[2].iloc[-StrainSensor.data_points_per_second:].mean()
+                        StrainSensor.total_R = StrainSensor.sensor_data[order[2]].iloc[-StrainSensor.data_points_per_second:].mean() +  StrainSensor.sensor_data[order[3]].iloc[-StrainSensor.data_points_per_second:].mean()
 
-                    if (StrainSensor.total_L / StrainSensor.total) > detect:
-                        self.side = 'left'
-                        sideDetected = True
-                        print('detected, pied droit levé')
-                        #print(StrainSensor.sensor_data)
-                    elif (StrainSensor.total_R / StrainSensor.total) > detect:
+
+                    print(StrainSensor.total_L)
+                    if (StrainSensor.total_L < (StrainSensor.baseline_L * detect) and StrainSensor.total_L != 0 and StrainSensor.baseline_L != 0 ):
+
+                    #if (StrainSensor.total_L / StrainSensor.total) > detect:
                         self.side = 'right'
                         sideDetected = True
                         print('detected, pied gauche levé')
+                        #print(StrainSensor.sensor_data)
+                    elif (StrainSensor.total_R < (StrainSensor.baseline_R * detect) and StrainSensor.total_R != 0 and StrainSensor.baseline_R != 0  ):
+                        self.side = 'left'
+                        sideDetected = True
+                        print('detected, pied droit levé')
                         #print(StrainSensor.sensor_data)
                     else:
                         self.side = 'both'
                 else:
                     self.side = 'no one'
+    
+    def getBaseline(self):
+        if self.channelNo in [order[0], order[1]]:
+            StrainSensor.baseline_L = StrainSensor.sensor_data[order[0]].iloc[-StrainSensor.data_points_per_second:].mean() +  StrainSensor.sensor_data[order[1]].iloc[-StrainSensor.data_points_per_second:].mean()
+
+
+        if self.channelNo in [order[2], order[3]]:
+            # Utilisez pandas.concat au lieu de append
+            StrainSensor.baseline_R = StrainSensor.sensor_data[order[2]].iloc[-StrainSensor.data_points_per_second:].mean() +  StrainSensor.sensor_data[order[3]].iloc[-StrainSensor.data_points_per_second:].mean()
+
 
 
 
@@ -254,7 +288,7 @@ class WebSocketClient:
         print("Connected to the server")
 
     def on_message(self, ws, message):
-        global sideDetected, allowDetection, subjectOnPlateform, i, essai
+        global sideDetected, allowDetection, subjectOnPlateform, i, essai, baseline
         #print(f"Received: {message}")
             # Vérifier si le message est non vide
         if message:
@@ -262,6 +296,9 @@ class WebSocketClient:
                 # Essayez de charger le message en tant qu'objet JSON
                 message_decode = json.loads(message)
                 print('receive: ', message_decode, time.time())
+
+                # if (message_decode['status'] == 'offset'):
+                #     toggle_offset(sensors)
                 if (message_decode['status'] == 'newSession'):
                     self.idSession = self.db.createEquilibreSession(self.idUser)
                     payload = {
@@ -271,11 +308,22 @@ class WebSocketClient:
 
                     essai = 0
                     self.ws.send(json.dumps(payload))
+                elif (message_decode['status'] == 'wait' and message_decode['essai'] == 50 and subjectOnPlateform):
+                    print('on')
+                    baseline = message_decode['baseline']
+                    if (baseline == False):
+                        payload = {
+                            'topic': 'fromPython',
+                            'status': 'go',
+                        }
+                        self.ws.send(json.dumps(payload))
 
-                elif (message_decode['status'] == 'start' and message_decode['essai'] == 100 and subjectOnPlateform == False):
+
+
+                elif (message_decode['status'] == 'start' and message_decode['essai'] == 100):
                     self.reset()
+                    baseline = False
                     
-                    toggle_offset(sensors)
                     while subjectOnPlateform == False:
                         time.sleep(0.01)
                     payload = {
@@ -365,6 +413,7 @@ class WebSocketClient:
         print('record_data')
         receiveTime = time.time()
         allowDetection= True
+        time.sleep(0.2)
         while sideDetected == False:
             time.sleep(0.01)
             if time.time() - receiveTime >= self.db.config.delayDetection:
@@ -449,7 +498,7 @@ class WebSocketClient:
 
     
 if __name__ == '__main__':
-    db = databaseHandler(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,DB_PORT)
+    db = databaseHandler(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME,DB_PORT,config)
     S0 = StrainSensor(SERIAL_NUMBER,0,db.config.dataIntervalStability,db.config.A0,db.config.B0)
     S1 = StrainSensor(SERIAL_NUMBER,1,db.config.dataIntervalStability,db.config.A1,db.config.B1)
     S2 = StrainSensor(SERIAL_NUMBER,2,db.config.dataIntervalStability,db.config.A2,db.config.B2)
@@ -459,8 +508,10 @@ if __name__ == '__main__':
     S2.run()
     S3.run()
 
+
     # Liste de tous les capteurs
     sensors = [S0, S1, S2, S3]
+    toggle_offset(sensors)
 
     client = WebSocketClient("ws://localhost:8080",sensors,db)
 

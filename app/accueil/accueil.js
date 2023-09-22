@@ -122,6 +122,16 @@ startCountdown.addEventListener('click', handleStartCountdownClick);
 
 
 loadUserData();
+toggleOffset();
+
+function toggleOffset() {
+    payload = {
+        topic: 'toPython',
+        status: 'offset'
+    }
+    window.api.send('toMain',payload);
+
+}
 
 function loadUserData() {
     console.log('load user data');
@@ -155,14 +165,37 @@ window.api.receive('fromMain', (arg) => {
     }
 
     if (arg.status == 'onPlateform' && userTest == false) {
+        console.log('on');
+        const messageUser = document.getElementById('messageUser');
+        messageUser.textContent = "Restez immobile sur la plateforme durant quelques secondes";
 
-    payload = {
-        'topic': 'toPython',
-        'status': 'start',
-        'essai': 0
-    }
-    //window.api.send('toMain', payload);
-    userTest == true;
+        const payload = {
+            'topic': 'toPython',
+            'status': 'wait',
+            'essai': 50,
+            'baseline': true
+        }
+        window.api.send('toMain', payload);
+        
+                // RESTEZ IMMOBILE 3 SECONDES 
+       //Attendre 3 secondes avant d'envoyer le message
+        setTimeout(() => {
+
+
+            const payload = {
+                'topic': 'toPython',
+                'status': 'wait',
+                'essai': 50,
+                'baseline': false
+            };
+            window.api.send('toMain', payload);
+            userTest = true;  // Assurez-vous d'affecter la nouvelle valeur avec '=' et non '=='
+        }, 3000);
+
+
+
+
+
     }
 });
 
