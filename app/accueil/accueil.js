@@ -159,6 +159,7 @@ window.api.receive('fromMain', (arg) => {
     arg.data.forEach(user => {
         let option = document.createElement('option');
         option.value = user.id;  
+        option.nom = user.prenom;
         option.textContent = user.prenom + ' (ID: ' + user.id + ')'; 
         userSelect.appendChild(option);
     });
@@ -200,6 +201,7 @@ window.api.receive('fromMain', (arg) => {
 });
 
 function handleUserSelectChange(event) {
+    document.getElementById('bonjour').textContent = 'Bonjour ' + event.target.selectedOptions[0].nom + ' !';
     document.getElementById('overlay').style.display = 'none';
     document.getElementById('changeUser').style.display = 'block';
     window.idUserSelected = event.target.value;

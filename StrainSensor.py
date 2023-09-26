@@ -35,6 +35,7 @@ subjectOnPlateform = False
 baseline = False
 #SERIAL_NUMBER = 565882
 SERIAL_NUMBER = 565863
+# SERIAL_NUMBER = 584716
 est_stable = 0
 indice_stable = 0
 essai = 0
