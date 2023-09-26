@@ -1,5 +1,8 @@
 $(function() {
     let userTest = false;
+    i = 0;
+    const startCountdown = document.getElementById('startCountdown');
+    startCountdown.disabled = true;
 
     $('.carousel').carousel();
 
@@ -10,6 +13,10 @@ $(function() {
     
         $('.carousel-control-next').on('click', function() {
             console.log('Bouton suivant cliqué');
+            i = i + 1;
+            if (i >= 5) {
+                startCountdown.disabled = false;
+            }
         });
 
 
@@ -99,7 +106,7 @@ slides.forEach((slide, index) => {
     
     
 
-const startCountdown = document.getElementById('startCountdown');
+
 
 function handleStartCountdownClick() {
     console.log('run test');
