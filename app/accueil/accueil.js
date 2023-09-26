@@ -23,7 +23,7 @@ $(function() {
 const slides = [
     {
         "image": "./app/accueil/assets/plateforme.JPG",
-        "texte": "Le but de se test est d'évaluer votre équilibre.\n\nLa capacité à se tenir en équilibre sur une jambe est essentielle à une locomotion normale et est déterminante pour les activités de la vie quotidienne telles que se tourner , monter les escaliers et s'habiller.\n\nNous allons utiliser cette plateforme pour évaluer votre équilibre. Vous allez devoir effectuer un passage par jambe."
+        "texte": "Le but de ce test est d'évaluer votre équilibre.\n\nLa capacité à se tenir en équilibre sur une jambe est essentielle à une locomotion normale et est déterminante pour les activités de la vie quotidienne telles que se tourner , monter les escaliers et s'habiller.\n\nNous allons utiliser cette plateforme pour évaluer votre équilibre. Vous allez devoir effectuer un passage par jambe."
     },
     {
         "image": "./app/accueil/assets/equilibre.png",
@@ -34,10 +34,10 @@ const slides = [
             <p>La bonne position correspond à l'image suivante.</p>
             <p>Les consignes à respecter:</p>
             <ul>
-                <li>Placer les mains sur les hanches</li>
-                <li>Lever une jambe. Celle-ci ne doit pas toucher la plateforme et ne pas prendre appui sur l'autre jambe.</li>
+                <li>Placer les mains sur les hanches.</li>
+                <li>Lever une jambe. Celle-ci ne doit pas toucher la plateforme et ne doit pas prendre appui sur l'autre jambe.</li>
             </ul>
-            <p>Essayer la position pendant 5 secondes avant de commencer le test.</p>
+            <p>Essayez la position pendant 5 secondes avant de commencer le test.</p>
         </div>
         `
     },    
@@ -66,7 +66,7 @@ const slides = [
         `<div>
             <p>Déroulement du test : </p>
             <ul>
-                <li>Montez sur la plateforme avec les 2 jambes.</li>
+                <li>Montez sur la plateforme avec les deux jambes.</li>
                 <li>Quand vous êtes prêt, levez la jambe gauche, le test va démarrer automatiquement.</li>
                 <li>Fixez ensuite le point bleu sur l'écran durant les 15 secondes du test.</li>
                 <li>Lorsque les 15 secondes sont terminées, vous avez 15 secondes de récupération.</li>
