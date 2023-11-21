@@ -191,7 +191,7 @@ class StrainSensor():
                         StrainSensor.total_R = StrainSensor.sensor_data[order[2]].iloc[-StrainSensor.data_points_per_second:].mean() +  StrainSensor.sensor_data[order[3]].iloc[-StrainSensor.data_points_per_second:].mean()
 
 
-                    print(StrainSensor.total_L)
+                    #print(StrainSensor.total_L)
                     if (StrainSensor.total_L < (StrainSensor.baseline_L * detect) and StrainSensor.total_L != 0 and StrainSensor.baseline_L != 0 ):
 
                     #if (StrainSensor.total_L / StrainSensor.total) > detect:
@@ -297,11 +297,13 @@ class WebSocketClient:
                 # Essayez de charger le message en tant qu'objet JSON
                 message_decode = json.loads(message)
                 print('receive: ', message_decode, time.time())
-
+                # if (int(message_decode['idUser']) > 0):
+                #     self.idUser = int(message_decode['idUser'])
+                print(self.idUser)
                 # if (message_decode['status'] == 'offset'):
                 #     toggle_offset(sensors)
                 if (message_decode['status'] == 'newSession'):
-                    self.idSession = self.db.createEquilibreSession(self.idUser)
+                    self.idSession == None
                     payload = {
                         'topic': 'fromPython',
                         'status': 'newSession',
@@ -312,6 +314,7 @@ class WebSocketClient:
                 elif (message_decode['status'] == 'wait' and message_decode['essai'] == 50 and subjectOnPlateform):
                     print('on')
                     baseline = message_decode['baseline']
+                    self.idUser = message_decode['idUser']
                     if (baseline == False):
                         payload = {
                             'topic': 'fromPython',

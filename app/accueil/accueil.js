@@ -2,7 +2,7 @@ $(function() {
     let userTest = false;
     i = 0;
     const startCountdown = document.getElementById('startCountdown');
-    startCountdown.disabled = true;
+    // startCountdown.disabled = true;
 
     $('.carousel').carousel();
 
@@ -169,6 +169,7 @@ window.api.receive('fromMain', (arg) => {
         option.nom = user.prenom;
         option.textContent = user.prenom + ' (ID: ' + user.id + ')'; 
         userSelect.appendChild(option);
+        
     });
     }
 
@@ -181,7 +182,8 @@ window.api.receive('fromMain', (arg) => {
             'topic': 'toPython',
             'status': 'wait',
             'essai': 50,
-            'baseline': true
+            'baseline': true,
+
         }
         window.api.send('toMain', payload);
         
@@ -194,7 +196,8 @@ window.api.receive('fromMain', (arg) => {
                 'topic': 'toPython',
                 'status': 'wait',
                 'essai': 50,
-                'baseline': false
+                'baseline': false,
+                'idUser': window.idUserSelected
             };
             window.api.send('toMain', payload);
             userTest = true;  // Assurez-vous d'affecter la nouvelle valeur avec '=' et non '=='
@@ -216,6 +219,7 @@ function handleUserSelectChange(event) {
         topic: 'user-selected',
         message: window.idUserSelected
     };
+    console.log(window.idUserSelected);
     window.api.send('toMain', payload);
 }
 

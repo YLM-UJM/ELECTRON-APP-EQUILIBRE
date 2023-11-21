@@ -40,8 +40,13 @@ class databaseHandler:
             return results
         
     def insertResults(self, idEquilibreSession, EA):
-        sql = "INSERT INTO equilibre_values (idEquilibreSession, idEquilibreValues, createdAt, value) VALUES (%s, DEFAULT, DEFAULT, %s)"
-        values = (idEquilibreSession, EA)
+
+        healthScore = round((EA * -0.15) + 115)
+        if (healthScore < 0):
+            healthScore = 0
+
+        sql = "INSERT INTO equilibre_values (idEquilibreSession, idEquilibreValues, createdAt, value, healthScore) VALUES (%s, DEFAULT, DEFAULT, %s, %s)"
+        values = (idEquilibreSession, EA, healthScore)
         values = [float(x) if isinstance(x, np.float64) else x for x in values]
         self.cursor.execute(sql, values)
         self.mydb.commit()
@@ -61,7 +66,7 @@ class databaseHandler:
 
     def getResults(self,idSession):
         # Préparez la requête SQL avec un paramètre de substitution
-        sql = "SELECT idEquilibreValues, idEquilibreSession, value FROM equilibre_values WHERE idEquilibreSession = %s ORDER BY idEquilibreValues DESC LIMIT 2"
+        sql = "SELECT idEquilibreValues, idEquilibreSession, value, healthScore FROM equilibre_values WHERE idEquilibreSession = %s ORDER BY idEquilibreValues DESC LIMIT 2"
         values = (idSession,)
         # Exécutez la requête avec la valeur de maConfig.idSession
         self.cursor.execute(sql, values)
@@ -78,4 +83,35 @@ class databaseHandler:
             results.append(obj)
         print(results)
         return results
+    
+
+
+
+    # Fonction qui simule le comportement du code JavaScript fourni
+    # def find_index_by_flexibility(sexe, age, equilibre_value, base_path='/mnt/data/'):
+    #     # Sélection du fichier CSV en fonction du sexe
+    #     csv_file_path = base_path + ('normes/handgrip_norme_homme.csv' if sexe == 1 else 'normes/handgrip_norme_femme.csv')
+
+    #     # Lecture du fichier CSV
+    #     df = pd.read_csv(csv_file_path)
+        
+    #     # Trouver l'index de la colonne correspondant à l'âge
+    #     age_column = str(age - 1)  # Convertir l'âge en chaîne pour la correspondance
+        
+    #     # Trouver l'index de la première ligne où la valeur de souplesse est supérieure ou égale à souplesse_value
+    #     index = df[df[age_column] >= equilibre_value].index[0] if not df[df[age_column] >= equilibre_value].empty else None
+        
+    #     # Retourner l'index de la ligne, si trouvé
+    #     return index
+
+# Exemple d'utilisation de la fonction
+# sexe = 1 pour homme, 2 pour femme
+# age = âge pour lequel chercher
+# souplesse_value = valeur de souplesse à comparer
+# Remarque : les fichiers CSV doivent être présents dans le chemin spécifié pour que cela fonctionne.
+# find_index_by_flexibility(sexe=1, age=25, souplesse_value=30)
+
+# Cette fonction est une simulation, elle ne sera pas exécutée ici car elle nécessite des fichiers CSV spécifiques.
+# Si vous fournissez les fichiers CSV, je pourrais exécuter la fonction et vous montrer le résultat.
+
         
