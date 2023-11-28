@@ -92,7 +92,7 @@ if (essai == 2) {
 })
 
 function recup(countDownRecup, essai) {
-    let rest = 1;
+    let rest = 10;
     showDiv('recup');
     countDownRecup.textContent = rest;
     const timerInterval = setInterval(() => {
