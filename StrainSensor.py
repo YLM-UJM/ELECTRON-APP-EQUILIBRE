@@ -311,7 +311,7 @@ class WebSocketClient:
 
                     essai = 0
                     self.ws.send(json.dumps(payload))
-                    self.idUser = message_decode['essai']
+                    self.idUser = message_decode['idUser']
                     
                 elif (message_decode['status'] == 'wait' and message_decode['essai'] == 50 and subjectOnPlateform):
                     print('on')
