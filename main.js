@@ -24,7 +24,8 @@ const createWindow = () => {
       nodeIntegration: false,
       contextIsolation: true, // Assurez-vous que contextIsolation est activé
       enableRemoteModule: true,
-    }
+    },
+    fullscreen: true
   })
 
   // and load the index.html of the app.
