@@ -304,6 +304,7 @@ class WebSocketClient:
                 #     toggle_offset(sensors)
                 if (message_decode['status'] == 'newSession'):
                     self.idSession == None
+                    self.idUser = None
                     payload = {
                         'topic': 'fromPython',
                         'status': 'newSession',
@@ -368,6 +369,8 @@ class WebSocketClient:
                         'topic': 'fromPython',
                         'status': 'end'
                     }
+                    self.idSession = None
+                    self.idUser = None
                     self.ws.send(json.dumps(payload))
             except json.JSONDecodeError:
                 # Si le message n'est pas un JSON valide, imprimez une erreur
