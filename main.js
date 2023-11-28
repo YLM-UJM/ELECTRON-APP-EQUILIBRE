@@ -158,7 +158,7 @@ return db;
 }
 
 function getUsers(db) {
-  db.query('SELECT id, prenom FROM user ORDER BY id DESC', (error, results, fields) => {
+  db.query('SELECT id, prenom FROM user WHERE DATE(createdAt) = DATE(NOW()) ORDER BY id DESC', (error, results, fields) => {
     if (error) {
       return console.error(error.message);
     }
