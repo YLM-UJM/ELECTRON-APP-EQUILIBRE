@@ -311,12 +311,11 @@ class WebSocketClient:
 
                     essai = 0
                     self.ws.send(json.dumps(payload))
-                    self.idUser = message_decode['idUser']
                     
                 elif (message_decode['status'] == 'wait' and message_decode['essai'] == 50 and subjectOnPlateform):
                     print('on')
                     baseline = message_decode['baseline']
-                    self.idUser = message_decode['idUser']
+                
                     if (baseline == False):
                         payload = {
                             'topic': 'fromPython',
@@ -329,7 +328,7 @@ class WebSocketClient:
                 elif (message_decode['status'] == 'start' and message_decode['essai'] == 100):
                     self.reset()
                     baseline = False
-                    self.idUser = message_decode['essai']
+                    self.idUser = message_decode['idUser']
                     while subjectOnPlateform == False:
                         time.sleep(0.01)
                     payload = {
