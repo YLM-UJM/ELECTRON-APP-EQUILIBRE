@@ -342,6 +342,8 @@ class WebSocketClient:
                     # Créer une session si aucune existe
                     if (self.idSession == None):
                         self.idSession = self.db.createEquilibreSession(self.idUser)
+                        print('idSession : ', self.idSession)
+                        print('idUser: ', self.idUser)
                 elif subjectOnPlateform and message_decode['essai'] <= 2:
                     self.reset()
                     if message_decode['essai'] == 0:
