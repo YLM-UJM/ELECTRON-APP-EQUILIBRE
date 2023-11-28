@@ -308,7 +308,7 @@ class WebSocketClient:
                         'topic': 'fromPython',
                         'status': 'newSession',
                     }
-                    self.idUser = message_decode['idUser'] == 100
+                    self.idUser = message_decode['idUser']
                     essai = 0
                     self.ws.send(json.dumps(payload))
                     
@@ -328,7 +328,7 @@ class WebSocketClient:
                 elif (message_decode['status'] == 'start' and message_decode['essai'] == 100):
                     self.reset()
                     baseline = False
-                    self.idUser = message_decode['idUser'] == 100
+                    self.idUser = message_decode['idUser']
                     while subjectOnPlateform == False:
                         time.sleep(0.01)
                     payload = {
