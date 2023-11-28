@@ -315,7 +315,7 @@ class WebSocketClient:
                 elif (message_decode['status'] == 'wait' and message_decode['essai'] == 50 and subjectOnPlateform):
                     print('on')
                     baseline = message_decode['baseline']
-                
+                    self.idUser = message_decode['idUser']
                     if (baseline == False):
                         payload = {
                             'topic': 'fromPython',
