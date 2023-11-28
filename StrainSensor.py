@@ -308,9 +308,10 @@ class WebSocketClient:
                         'topic': 'fromPython',
                         'status': 'newSession',
                     }
-                    self.idUser = message_decode['idUser']
+
                     essai = 0
                     self.ws.send(json.dumps(payload))
+                    self.idUser = message_decode['essai']
                     
                 elif (message_decode['status'] == 'wait' and message_decode['essai'] == 50 and subjectOnPlateform):
                     print('on')
@@ -328,7 +329,7 @@ class WebSocketClient:
                 elif (message_decode['status'] == 'start' and message_decode['essai'] == 100):
                     self.reset()
                     baseline = False
-                    self.idUser = message_decode['idUser']
+                    self.idUser = message_decode['essai']
                     while subjectOnPlateform == False:
                         time.sleep(0.01)
                     payload = {
